@@ -8,6 +8,12 @@ gradle currently has the support for module dependencies with the ```compile pro
 
 Currently the only IDE supported is Intellij Idea.
 
+*Enabling the plugin*
+
+```gradle
+apply plugin: 'multiproject'
+```
+
 *Requirement for subproject wishing to be available for multi project inclusion (e.g. API project):*
 
 ```gradle
@@ -25,14 +31,14 @@ In the project where you wish to include other gradle projects.
 multiProject {
 
     /* 
-        The override file can override any properties set in this, very useful as this file is committed, 
+        The override file can override any properties set in this block. 
+        This is very useful as this file is committed, 
         and the override file can be left uncommitted and ignored in VCS, 
         if only some developers require the local checkout of the projects 
     */
     overrideFile = file("$rootProject.projectDir/multiProjectOverride.gradle")
 
-    //project dependency descriptor, becomes available as a dependency in build.gradle files with the following syntax:
-    //gradleProject('api', 'subModuleFromApiProject')
+    //project dependency descriptor, named api, is refered by gradleProject('api', 'subModule')
     api {
         //denotes the directory where the source is checked out, must be a gradle project with a settings.gradle
         directory = file("${rootProject.projectDir}/../api")
