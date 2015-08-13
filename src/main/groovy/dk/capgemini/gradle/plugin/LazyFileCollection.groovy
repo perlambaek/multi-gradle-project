@@ -4,12 +4,14 @@ import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.file.FileCollection
 import org.gradle.api.file.FileTree
+import org.gradle.api.internal.file.FileCollectionInternal
+import org.gradle.api.internal.file.FileSystemSubset
 import org.gradle.api.specs.Spec
 import org.gradle.api.tasks.StopExecutionException
 import org.gradle.api.tasks.TaskDependency
 
 
-class LazyFileCollection implements FileCollection {
+class LazyFileCollection implements FileCollectionInternal {
 
     Closure fileProvider
     private Project project
@@ -118,5 +120,15 @@ class LazyFileCollection implements FileCollection {
     @Override
     Iterator<File> iterator() {
         return wrapped().iterator()
+    }
+
+    @Override
+    void registerWatchPoints(FileSystemSubset.Builder builder) {
+
+    }
+
+    @Override
+    String getDisplayName() {
+        return "displayName"
     }
 }
